@@ -19,6 +19,7 @@ class CharacterListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureVC()
+        configureTableView()
     }
     
     
@@ -26,6 +27,31 @@ class CharacterListVC: UIViewController {
         title = StringConstants.CHARACTER_LIST
         navigationController?.navigationBar.prefersLargeTitles = true
     }
+    
+    
+    private func configureTableView(){
+        contentView.tableView.register(CharacterTableViewCell.self, forCellReuseIdentifier: CharacterTableViewCell.REUSE_ID)
+        contentView.tableView.dataSource = self
+        contentView.tableView.separatorStyle = .none
+    }
 
 
+}
+
+extension CharacterListVC : UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CharacterTableViewCell.REUSE_ID) as! CharacterTableViewCell
+        
+        cell.set(character: CharacterProfile(name: "Rick", species: "Human", status: "Alive", imageURL: ""))
+        
+        return cell
+    }
+    
+    
+    
+    
 }

@@ -28,7 +28,7 @@ class CharacterListContentView: UIView {
     }
     
     private func setupTableView(){
-        tableView.backgroundColor = .red
+        tableView.backgroundColor = .secondarySystemBackground
     }
     
     private func layoutUI(){

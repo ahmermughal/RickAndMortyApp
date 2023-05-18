@@ -9,7 +9,7 @@ import UIKit
 
 class CharacterTableViewCell: UITableViewCell {
 
-    private static let REUSE_ID = "CharacterTableViewCell"
+    static let REUSE_ID = "CharacterTableViewCell"
     
     private let containerView = UIView()
     private let nameLabel = UILabel()
@@ -17,13 +17,15 @@ class CharacterTableViewCell: UITableViewCell {
     private let statusLabel = UILabel()
     private let profileImageView = UIImageView()
     private let statusContainerView = UIView()
-    
+    private let labelStackView = UIStackView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupView()
         setupLabels()
         setupImageViews()
         setupStatusView()
+        setupLabelStackView()
         setupContainerView()
         layoutUI()
     }
@@ -32,12 +34,25 @@ class CharacterTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func
+
+    func set(character: CharacterProfile){
+        nameLabel.text = character.name
+        speciesLabel.text = character.species
+        statusLabel.text = character.status
+        
+    }
+    
+    private func setupView(){
+        self.backgroundColor = .clear
+        self.selectionStyle = .none
+    }
     
     private func setupLabels(){
         nameLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         speciesLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        
+        statusLabel.font = UIFont.preferredFont(forTextStyle: .body)
+
+        statusLabel.textAlignment = .center
     }
     
     private func setupImageViews(){
@@ -63,16 +78,24 @@ class CharacterTableViewCell: UITableViewCell {
         
     }
     
+    private func setupLabelStackView(){
+        labelStackView.addArrangedSubview(nameLabel)
+        labelStackView.addArrangedSubview(speciesLabel)
+        labelStackView.axis = .vertical
+        labelStackView.distribution = .equalCentering
+    }
+    
     private func setupContainerView(){
+        containerView.backgroundColor = .systemBackground
         containerView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(containerView)
         
         NSLayoutConstraint.activate([
         
             containerView.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
-            containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
-            containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
-            containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
+            containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 
         
         ])
@@ -80,7 +103,7 @@ class CharacterTableViewCell: UITableViewCell {
     
     private func layoutUI(){
         
-        let views = [profileImageView, nameLabel, speciesLabel, statusContainerView]
+        let views = [profileImageView, labelStackView, statusContainerView]
         
         for view in views {
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -89,23 +112,29 @@ class CharacterTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
         
-            profileImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
+            profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             profileImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            profileImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
             profileImageView.widthAnchor.constraint(equalToConstant: ViewSizeConstants.CHARACTER_LIST_CONTENT_VIEW_PROFILE_IMAGE_SIZE.width),
             profileImageView.heightAnchor.constraint(equalToConstant: ViewSizeConstants.CHARACTER_LIST_CONTENT_VIEW_PROFILE_IMAGE_SIZE.height),
             
-            nameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 16),
-            nameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
-            
-            speciesLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
-            speciesLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             
             statusContainerView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             statusContainerView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             statusContainerView.heightAnchor.constraint(equalToConstant: ViewSizeConstants.CHARACTER_LIST_CONTENT_VIEW_STATUS_CONTAINER_VIEW_SIZE.height),
             statusContainerView.widthAnchor.constraint(equalToConstant: ViewSizeConstants.CHARACTER_LIST_CONTENT_VIEW_STATUS_CONTAINER_VIEW_SIZE.width),
         
+            
+            labelStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
+            labelStackView.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
+            labelStackView.trailingAnchor.constraint(equalTo: statusContainerView.leadingAnchor, constant: -8),
+            labelStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16)
+            
+//            nameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor),
+//            nameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
+//
+//            speciesLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+//            speciesLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+
         
         ])
         
