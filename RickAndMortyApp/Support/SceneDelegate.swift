@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         /// Intialize the starting view controller which will be displayed when app launches
-        let vc = ViewController()
+        let vc = CharacterListVC()
         /// Setup navigation controller with the above vc as the root view controller
         let navVC = UINavigationController(rootViewController: vc)
         
