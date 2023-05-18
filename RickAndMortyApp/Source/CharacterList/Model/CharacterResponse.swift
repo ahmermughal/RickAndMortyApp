@@ -29,12 +29,14 @@ struct CharacterPageInfo : Codable{
 }
 
 struct CharacterProfile : Codable, Hashable {
+    let id = UUID()
     let name : String
     let species : String
     let status: String
     let imageURL : String
     
     enum CodingKeys: String, CodingKey{
+        case id
         case name
         case species
         case status

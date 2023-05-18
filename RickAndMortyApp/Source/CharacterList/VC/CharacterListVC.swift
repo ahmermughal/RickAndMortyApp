@@ -52,6 +52,7 @@ class CharacterListVC: UIViewController {
     private func configureTableView(){
         contentView.tableView.register(CharacterTableViewCell.self, forCellReuseIdentifier: CharacterTableViewCell.REUSE_ID)
         contentView.tableView.separatorStyle = .none
+        contentView.tableView.delegate = self
     }
     
     private func setupBinding(){
@@ -88,4 +89,21 @@ class CharacterListVC: UIViewController {
         }
     }
 
+}
+
+extension CharacterListVC: UITableViewDelegate{
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        /// checks to see if at the bottom of the list
+        if offsetY > contentHeight - height{
+            guard viewModel.hasNext, !viewModel.isLoadingNext else {
+                return
+            }
+            viewModel.getCharacters()
+        }
+    }
 }

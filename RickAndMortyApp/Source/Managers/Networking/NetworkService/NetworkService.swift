@@ -96,7 +96,7 @@ class NetworkService : NetworkServiceProtocol{
                 return data
             }
             .handleEvents(receiveOutput:{ data in
-                debugPrint("URL Data: \(String(decoding: data, as: UTF8.self))")
+                //debugPrint("URL Data: \(String(decoding: data, as: UTF8.self))")
             })
         /// Decode the received data as the specified Decodable type T
             .decode(type: T.self, decoder: JSONDecoder())

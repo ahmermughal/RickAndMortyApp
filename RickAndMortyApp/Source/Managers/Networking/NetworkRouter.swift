@@ -59,7 +59,7 @@ enum NetworkRouter{
     var parameters: [String: Any]? {
         switch self {
         case .getAllCharacters(let page):
-            return ["page" : page]
+            return ["page" : "\(page)"]
         }
     }
     

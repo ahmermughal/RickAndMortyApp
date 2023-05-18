@@ -12,24 +12,33 @@ class CharacterViewModel{
     
     private var subscriptions : [AnyCancellable] = []
     @Published private(set) var characterList : [CharacterProfile] = []
-    
-    init() {
-        
-    }
+    private var currentPage : Int = 1
+    private(set) var hasNext = false
+    private(set) var isLoadingNext = false
     
     func getCharacters(){
-        NetworkManager.shared.getAllCharacters()
+        isLoadingNext = true
+        NetworkManager.shared.getAllCharacters(page: currentPage)
             .sink(receiveCompletion: handleCompletion, receiveValue: handleCharacterResponse)
             .store(in: &subscriptions)
     }
     
     private func handleCompletion(completion: Subscribers.Completion<NetworkError>){
-        print(completion)
+        isLoadingNext = false
     }
     
     private func handleCharacterResponse(response: CharacterResponse){
-        characterList = response.results
-        print("Characters: \(characterList)")
+        
+        characterList.append(contentsOf: response.results)
+        
+        if let safeNextPage = response.info.nextPage, !safeNextPage.isEmpty{
+            currentPage += 1
+            hasNext = true
+        }else{
+            hasNext = false
+        }
+        
+        
     }
     
     
