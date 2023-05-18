@@ -39,6 +39,7 @@ class CharacterTableViewCell: UITableViewCell {
         nameLabel.text = character.name
         speciesLabel.text = character.species
         statusLabel.text = character.status.rawValue.capitalized
+        profileImageView.setImageWithUrl(url: character.imageURL)
         setStatusContainerViewColor(status: character.status)
     }
     
@@ -72,7 +73,7 @@ class CharacterTableViewCell: UITableViewCell {
     private func setupImageViews(){
         profileImageView.layer.cornerRadius = ViewSizeConstants.CHARACTER_LIST_CONTENT_VIEW_PROFILE_IMAGE_SIZE.height / 2
         profileImageView.backgroundColor = .red
-        
+        profileImageView.clipsToBounds = true
     }
     
     private func setupStatusView(){
