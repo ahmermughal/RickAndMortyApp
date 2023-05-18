@@ -86,7 +86,7 @@ class CharacterTableViewCell: UITableViewCell {
     }
     
     private func setupContainerView(){
-        containerView.backgroundColor = .systemBackground
+        containerView.backgroundColor = .secondarySystemBackground
         containerView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(containerView)
         
