@@ -37,7 +37,7 @@ struct CharacterProfile : Codable {
     enum CodingKeys: String, CodingKey{
         case name
         case species
-        case status = "next"
+        case status
         case imageURL = "image"
     }
     

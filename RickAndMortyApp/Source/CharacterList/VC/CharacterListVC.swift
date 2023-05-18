@@ -6,11 +6,21 @@
 //
 
 import UIKit
-
+import Combine
 class CharacterListVC: UIViewController {
 
     private let contentView = CharacterListContentView()
+    private var subscriptions : [AnyCancellable] = []
+    private let viewModel : CharacterViewModel
     
+    init(viewModel: CharacterViewModel = CharacterViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         self.view = contentView
@@ -20,6 +30,7 @@ class CharacterListVC: UIViewController {
         super.viewDidLoad()
         configureVC()
         configureTableView()
+        viewModel.getCharacters()
     }
     
     

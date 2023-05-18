@@ -10,7 +10,7 @@ import Foundation
 
 enum NetworkRouter{
 
-    case getAllCharacters
+    case getAllCharacters(page: Int)
 
     
     // MARK: Base URL
@@ -58,8 +58,8 @@ enum NetworkRouter{
     /// Defines parameters an endpoint takes based on the current enum case.
     var parameters: [String: Any]? {
         switch self {
-        case .getAllCharacters:
-            return nil
+        case .getAllCharacters(let page):
+            return ["page" : page]
         }
     }
     

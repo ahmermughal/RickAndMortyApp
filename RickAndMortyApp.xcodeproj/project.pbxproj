@@ -23,6 +23,7 @@
 		AEF37A972A163AF40026F91A /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF37A962A163AF40026F91A /* NetworkServiceProtocol.swift */; };
 		AEF37A9A2A163B4E0026F91A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF37A992A163B4E0026F91A /* NetworkManager.swift */; };
 		AEF37A9C2A163B560026F91A /* NetworkManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF37A9B2A163B560026F91A /* NetworkManagerProtocol.swift */; };
+		AEF37AA02A163F860026F91A /* CharacterListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF37A9F2A163F860026F91A /* CharacterListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		AEF37A962A163AF40026F91A /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
 		AEF37A992A163B4E0026F91A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		AEF37A9B2A163B560026F91A /* NetworkManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerProtocol.swift; sourceTree = "<group>"; };
+		AEF37A9F2A163F860026F91A /* CharacterListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 		AEF37A762A160F490026F91A /* CharacterList */ = {
 			isa = PBXGroup;
 			children = (
+				AEF37A9D2A163F6B0026F91A /* ViewModel */,
 				AEF37A892A162B000026F91A /* Model */,
 				AEF37A782A160F580026F91A /* View */,
 				AEF37A772A160F510026F91A /* VC */,
@@ -191,6 +194,14 @@
 				AEF37A9B2A163B560026F91A /* NetworkManagerProtocol.swift */,
 			);
 			path = NetworkManager;
+			sourceTree = "<group>";
+		};
+		AEF37A9D2A163F6B0026F91A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AEF37A9F2A163F860026F91A /* CharacterListViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,6 +287,7 @@
 				AEF37A972A163AF40026F91A /* NetworkServiceProtocol.swift in Sources */,
 				AEF37A832A16123F0026F91A /* CharacterTableViewCell.swift in Sources */,
 				AEF37A8F2A1639230026F91A /* NetworkRouter.swift in Sources */,
+				AEF37AA02A163F860026F91A /* CharacterListViewModel.swift in Sources */,
 				AEF37A922A1639F00026F91A /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

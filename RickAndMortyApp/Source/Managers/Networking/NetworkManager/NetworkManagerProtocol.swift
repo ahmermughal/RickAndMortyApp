@@ -20,7 +20,7 @@ protocol NetworkManagerProtocol{
     
     /// Method signature for `getAllCharacters`.
     /// - Returns: an AnyPublisher of an array of CharacterResponse objects, and may produce a NetworkError.
-    func getAllCharacters() -> AnyPublisher<CharacterResponse, NetworkError>
+    func getAllCharacters(page: Int) -> AnyPublisher<CharacterResponse, NetworkError>
 
 
   

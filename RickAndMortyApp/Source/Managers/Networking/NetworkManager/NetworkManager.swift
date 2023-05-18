@@ -23,10 +23,10 @@ class NetworkManager : NetworkManagerProtocol{
     /// Define a function `getAllCharacters` that is used to query all the characters in Rick And Morty tv show characters.
     /// It returns an "AnyPublisher" object containing an array of "CharacterResponse" elements or a "NetworkError" object
     /// - Returns: AnyPublisher of CharacterResponse or NetworkError
-    func getAllCharacters() -> AnyPublisher<CharacterResponse, NetworkError>{
+    func getAllCharacters(page: Int = 1) -> AnyPublisher<CharacterResponse, NetworkError>{
         /// Return the result of the performRequest function, with the apiType being set to "getShipmentPiece" and the "piece"
         /// parameter as an argument
-        return networkService.performRequest(apiType: .getAllCharacters, resultType: CharacterResponse.self)
+        return networkService.performRequest(apiType: .getAllCharacters(page: page), resultType: CharacterResponse.self)
     }
 
     
