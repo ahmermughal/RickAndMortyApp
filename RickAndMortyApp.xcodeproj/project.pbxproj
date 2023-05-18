@@ -14,6 +14,8 @@
 		AEF37A7C2A1610060026F91A /* CharacterListContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF37A7B2A1610060026F91A /* CharacterListContentView.swift */; };
 		AEF37A7E2A1610B70026F91A /* CharacterListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF37A7D2A1610B70026F91A /* CharacterListVC.swift */; };
 		AEF37A802A1611170026F91A /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF37A7F2A1611170026F91A /* StringConstants.swift */; };
+		AEF37A832A16123F0026F91A /* CharacterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF37A822A16123F0026F91A /* CharacterTableViewCell.swift */; };
+		AEF37A862A16230D0026F91A /* ViewSizeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF37A852A16230D0026F91A /* ViewSizeConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		AEF37A7B2A1610060026F91A /* CharacterListContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListContentView.swift; sourceTree = "<group>"; };
 		AEF37A7D2A1610B70026F91A /* CharacterListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListVC.swift; sourceTree = "<group>"; };
 		AEF37A7F2A1611170026F91A /* StringConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
+		AEF37A822A16123F0026F91A /* CharacterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterTableViewCell.swift; sourceTree = "<group>"; };
+		AEF37A852A16230D0026F91A /* ViewSizeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewSizeConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,7 @@
 			children = (
 				AEF37A682A160A2C0026F91A /* Assets.xcassets */,
 				AEF37A7F2A1611170026F91A /* StringConstants.swift */,
+				AEF37A852A16230D0026F91A /* ViewSizeConstants.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -113,9 +118,18 @@
 		AEF37A782A160F580026F91A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AEF37A812A16121C0026F91A /* Cell */,
 				AEF37A7B2A1610060026F91A /* CharacterListContentView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		AEF37A812A16121C0026F91A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				AEF37A822A16123F0026F91A /* CharacterTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,8 +205,10 @@
 				AEF37A602A160A2B0026F91A /* AppDelegate.swift in Sources */,
 				AEF37A622A160A2B0026F91A /* SceneDelegate.swift in Sources */,
 				AEF37A7E2A1610B70026F91A /* CharacterListVC.swift in Sources */,
+				AEF37A862A16230D0026F91A /* ViewSizeConstants.swift in Sources */,
 				AEF37A802A1611170026F91A /* StringConstants.swift in Sources */,
 				AEF37A7C2A1610060026F91A /* CharacterListContentView.swift in Sources */,
+				AEF37A832A16123F0026F91A /* CharacterTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
