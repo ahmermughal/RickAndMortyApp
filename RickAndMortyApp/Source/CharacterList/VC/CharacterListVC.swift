@@ -12,7 +12,7 @@ enum Section{
     case main
 }
 
-class CharacterListVC: UIViewController {
+class CharacterListVC: BaseViewController {
 
     // MARK: Variables
     /// Create an instance of CharacterListContentView as the view for this view controller
@@ -94,12 +94,28 @@ class CharacterListVC: UIViewController {
             })
             .sink(receiveValue: handleCharacterList)
             .store(in: &subscriptions)
+        
+        viewModel.$showLoader
+            /// Filter out nil values
+            .compactMap{$0}
+            .sink(receiveValue: handleShowLoader)
+            .store(in: &subscriptions)
+        
     }
 
     /// Handle the received character list from the view model
     private func handleCharacterList(characters: [CharacterProfile]) {
         /// Update the table view data with the received characters
         updateData(on: characters)
+    }
+    
+    /// Handle the showLoader variable from the view model to hide or show loading
+    private func handleShowLoader(show: Bool){
+        if show{
+            showLoadingView()
+        }else{
+            dismissLoadingView()
+        }
     }
     
     /// Configure the data source for the table view

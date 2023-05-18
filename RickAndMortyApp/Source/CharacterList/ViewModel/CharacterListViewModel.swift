@@ -13,6 +13,8 @@ class CharacterViewModel {
     // MARK: Publishers
     /// Published property to hold the character list
     @Published private(set) var characterList: [CharacterProfile] = []
+    /// Published property to update loader view
+    @Published private(set) var showLoader : Bool?
     
     // MARK: Variables
     /// An array to hold subscriptions to publishers
@@ -31,7 +33,7 @@ class CharacterViewModel {
     /// Method to fetch characters from the network
     func getCharacters() {
         isLoadingNext = true
-        
+        showLoader = true
         /// Call the network manager to get all characters for the current page
         NetworkManager.shared.getAllCharacters(page: currentPage)
             .sink(receiveCompletion: handleCompletion, receiveValue: handleCharacterResponse)
@@ -42,6 +44,7 @@ class CharacterViewModel {
     /// Handle the completion of the network request
     private func handleCompletion(completion: Subscribers.Completion<NetworkError>) {
         isLoadingNext = false
+        showLoader = false
         print(completion)
     }
     
