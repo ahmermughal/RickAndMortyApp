@@ -32,7 +32,7 @@ struct CharacterProfile : Codable, Hashable {
     let id = UUID()
     let name : String
     let species : String
-    let status: String
+    let status: CharacterStatus
     let imageURL : String
     
     enum CodingKeys: String, CodingKey{
@@ -42,5 +42,13 @@ struct CharacterProfile : Codable, Hashable {
         case status
         case imageURL = "image"
     }
+    
+}
+
+enum CharacterStatus : String, Codable{
+    
+    case Alive
+    case Dead
+    case unknown
     
 }

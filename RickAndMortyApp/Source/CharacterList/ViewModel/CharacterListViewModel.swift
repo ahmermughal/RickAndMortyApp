@@ -10,8 +10,9 @@ import Combine
 
 class CharacterViewModel{
     
-    private var subscriptions : [AnyCancellable] = []
     @Published private(set) var characterList : [CharacterProfile] = []
+    
+    private var subscriptions : [AnyCancellable] = []
     private var currentPage : Int = 1
     private(set) var hasNext = false
     private(set) var isLoadingNext = false
@@ -25,6 +26,7 @@ class CharacterViewModel{
     
     private func handleCompletion(completion: Subscribers.Completion<NetworkError>){
         isLoadingNext = false
+        print(completion)
     }
     
     private func handleCharacterResponse(response: CharacterResponse){
@@ -37,8 +39,6 @@ class CharacterViewModel{
         }else{
             hasNext = false
         }
-        
-        
     }
     
     

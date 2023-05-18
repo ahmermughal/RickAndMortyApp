@@ -38,8 +38,20 @@ class CharacterTableViewCell: UITableViewCell {
     func set(character: CharacterProfile){
         nameLabel.text = character.name
         speciesLabel.text = character.species
-        statusLabel.text = character.status
-        
+        statusLabel.text = character.status.rawValue.capitalized
+        setStatusContainerViewColor(status: character.status)
+    }
+    
+    private func setStatusContainerViewColor(status: CharacterStatus){
+        switch status{
+        case .Alive:
+            statusContainerView.backgroundColor = .systemGreen
+        case .Dead:
+            statusContainerView.backgroundColor = .systemRed
+        case .unknown:
+            statusContainerView.backgroundColor = .systemGray
+
+        }
     }
     
     private func setupView(){
@@ -53,6 +65,8 @@ class CharacterTableViewCell: UITableViewCell {
         statusLabel.font = UIFont.preferredFont(forTextStyle: .body)
 
         statusLabel.textAlignment = .center
+        statusLabel.adjustsFontSizeToFitWidth = true
+        statusLabel.minimumScaleFactor = 0.8
     }
     
     private func setupImageViews(){
