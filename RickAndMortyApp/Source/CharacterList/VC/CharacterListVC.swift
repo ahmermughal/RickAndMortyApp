@@ -14,12 +14,21 @@ enum Section{
 
 class CharacterListVC: UIViewController {
 
-    
+    // MARK: Variables
+    /// Create an instance of CharacterListContentView as the view for this view controller
     private let contentView = CharacterListContentView()
-    private var subscriptions : [AnyCancellable] = []
-    private let viewModel : CharacterViewModel
+    
+    /// An array to hold subscriptions to publishers
+    private var subscriptions: [AnyCancellable] = []
+    
+    /// The view model responsible for managing character data
+    private let viewModel: CharacterViewModel
+    
+    /// The diffable data source for the table view
     private var dataSource: UITableViewDiffableDataSource<Section, CharacterProfile>!
-
+    
+    // MARK: Init Functions
+    /// Initialize the view controller with a character view model
     init(viewModel: CharacterViewModel = CharacterViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -29,81 +38,118 @@ class CharacterListVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Override Functions
+    /// Loads the content view as the parent view of the view controller
     override func loadView() {
         self.view = contentView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /// Set up bindings between the view model and view controller
         setupBinding()
+        
+        /// Configure the view controller
         configureVC()
+        
+        /// Configure the table view
         configureTableView()
+        
+        /// Configure the data source
         configureDataSource()
+        
+        /// Request character data from the view model
         viewModel.getCharacters()
     }
     
-    
-    private func configureVC(){
+    // MARK: Private Functions
+    /// Configure the view controller
+    private func configureVC() {
+        /// Set the title of the view controller
         title = StringConstants.CHARACTER_LIST
+        
+        /// Enable large titles for the navigation bar
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-    
-    private func configureTableView(){
+    /// Configure the table view
+    private func configureTableView() {
+        /// Register the character table view cell class
         contentView.tableView.register(CharacterTableViewCell.self, forCellReuseIdentifier: CharacterTableViewCell.REUSE_ID)
+        
+        /// Hide the separators between table view cells
         contentView.tableView.separatorStyle = .none
+        
+        /// Set the table view delegate to self
         contentView.tableView.delegate = self
     }
     
-    private func setupBinding(){
+    /// Set up bindings between the view model and view controller
+    private func setupBinding() {
         viewModel.$characterList
             .filter({ list in
+                /// Filter out empty character lists
                 !list.isEmpty
             })
             .sink(receiveValue: handleCharacterList)
             .store(in: &subscriptions)
     }
 
-    private func handleCharacterList(characters: [CharacterProfile]){
-           updateData(on: characters)
+    /// Handle the received character list from the view model
+    private func handleCharacterList(characters: [CharacterProfile]) {
+        /// Update the table view data with the received characters
+        updateData(on: characters)
     }
     
-    private func configureDataSource(){
+    /// Configure the data source for the table view
+    private func configureDataSource() {
         dataSource = UITableViewDiffableDataSource(tableView: contentView.tableView, cellProvider: { tableView, indexPath, character in
             let cell = tableView.dequeueReusableCell(withIdentifier: CharacterTableViewCell.REUSE_ID, for: indexPath) as! CharacterTableViewCell
             
+            /// Set the character data for the cell
             cell.set(character: character)
             
             return cell
         })
-        
     }
     
-    func updateData(on characters: [CharacterProfile]){
+    
+    /// Update the data of the diffable data source
+    private func updateData(on characters: [CharacterProfile]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, CharacterProfile>()
+        
+        /// Append the main section and its items to the snapshot
         snapshot.appendSections([.main])
         snapshot.appendItems(characters)
+        
+        /// Apply the snapshot to the data source on the main queue
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {return}
+            guard let self = self else { return }
             self.dataSource.apply(snapshot, animatingDifferences: true)
         }
     }
-
 }
-
-extension CharacterListVC: UITableViewDelegate{
+// MARK: UITableViewDelegate
+extension CharacterListVC: UITableViewDelegate {
     
+    /// Delegate method called when the user finishes dragging the scroll view
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
         
-        /// checks to see if at the bottom of the list
-        if offsetY > contentHeight - height{
+        /// Check if the user has scrolled to the bottom of the list
+        if offsetY > contentHeight - height {
+            
+            /// Check if there are more characters to load and if the loading of next characters is not already in progress
             guard viewModel.hasNext, !viewModel.isLoadingNext else {
                 return
             }
+            
+            /// Request the next set of characters from the view model
             viewModel.getCharacters()
         }
     }
 }
+

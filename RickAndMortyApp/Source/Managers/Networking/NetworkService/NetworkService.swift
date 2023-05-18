@@ -11,8 +11,8 @@ import Foundation
 import Foundation
 import Combine
 
-/// NetworkService contains a single generic function named "performRequest". The function performs a network request based on the provided NetworkRouter type, and returns a publisher of the specified Decodable type T. The function first creates a URL from the baseURL and path properties of the NetworkRouter, adds parameters, sets the HTTP method and body, and adds headers to the request.
-/// The request is made using a shared URLSession and the response is decoded as the specified T type. Any errors that occur during the request or decoding process are mapped to NetworkError and returned as a publisher. The publisher is of type "AnyPublisher<T, NetworkError>" and is executed on the main dispatch queue.
+/// `NetworkService` contains a single generic function named `performRequest`. The function performs a network request based on the provided `NetworkRouter` type, and returns a publisher of the specified Decodable type T. The function first creates a URL from the baseURL and path properties of the NetworkRouter, adds parameters, sets the HTTP method and body, and adds headers to the request.
+/// The request is made using a shared URLSession and the response is decoded as the specified T type. Any errors that occur during the request or decoding process are mapped to `NetworkError` and returned as a publisher. The publisher is of type "AnyPublisher<T, NetworkError>" and is executed on the main dispatch queue.
 class NetworkService : NetworkServiceProtocol{
     
     
@@ -73,13 +73,13 @@ class NetworkService : NetworkServiceProtocol{
         
         /// Set the HTTP method of the request to the method specified in the NetworkRouter
         urlRequest.httpMethod = apiType.method
-        print("HTTPMethod Type: \(apiType.method)")
+        //print("HTTPMethod Type: \(apiType.method)")
         /// Set the HTTP body of the request to the data specified in the Network Router
         urlRequest.httpBody = apiType.bodyData
-        print("HTTPMethod Body: \(apiType.bodyData)")
+        //print("HTTPMethod Body: \(apiType.bodyData)")
         
         
-        debugPrint("Request URL: \(urlRequest.url)")
+        //debugPrint("Request URL: \(urlRequest.url)")
         /// Use the shared URLSession to create a dataTaskPublisher with the URLRequest
         return  urlSession
             .dataTaskPublisher(for: urlRequest)
@@ -103,12 +103,14 @@ class NetworkService : NetworkServiceProtocol{
         /// Map any errors that occur to a NetworkError
             .mapError { error -> NetworkError in
                 
-                if error.localizedDescription == "The Internet connection appears to be offline."{
-                    return .noInternet
-                }
-                
                 switch error {
                 case is URLError:
+                    
+                    let urlError = error as! URLError
+                    if urlError.code == .internationalRoamingOff || urlError.code == .dataNotAllowed{
+                        return .noInternet
+                    }
+                    
                     /// If the error is a URLError, return an invalid URL error
                     return .invalidURL
                 case is DecodingError:

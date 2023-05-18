@@ -7,7 +7,8 @@
 
 import Foundation
 
-
+/// Defines an enumeration named `NetworkRouter`" with a case: `getAllCharacte`, This enumeration is used to handle different API routes in a network layer of an application.
+/// Each case defines different properties like "path", "method", "parameters", "bodyData",  that are used to build a complete API request. The "baseURL" property is used as the base URL for building APIs, while "path" defines the endpoint of the API based on the current case. "method" defines the type of HTTP method (e.g., GET, PATCH) used for each case. "parameters" defines the parameters required for each endpoint, and "bodyData" defines the body data that an API will have. 
 enum NetworkRouter{
 
     case getAllCharacters(page: Int)

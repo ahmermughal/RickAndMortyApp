@@ -9,13 +9,22 @@ import UIKit
 
 class CharacterListContentView: UIView {
 
+    // MARK: UI Elements
+    /// Create a UITableView
     let tableView = UITableView()
     
-    
+    // MARK: Init Functions
+    /// Initialize the view
     override init(frame: CGRect) {
         super.init(frame: .zero)
+        
+        /// Setup the view
         setupView()
+        
+        /// Setup the table view
         setupTableView()
+        
+        /// Layout the UI elements
         layoutUI()
     }
     
@@ -23,15 +32,21 @@ class CharacterListContentView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView(){
-        
+    
+    // MARK: Private Functions
+    /// Setup the view
+    private func setupView() {
+        /// Additional view setup can be done here if needed
     }
     
-    private func setupTableView(){
+    /// Setup the table view
+    private func setupTableView() {
+        /// Set the background color of the table view to clear
         tableView.backgroundColor = .clear
     }
     
-    private func layoutUI(){
+    /// Layout the UI elements
+    private func layoutUI() {
         let views = [tableView]
         
         for view in views {
@@ -40,12 +55,11 @@ class CharacterListContentView: UIView {
         }
         
         NSLayoutConstraint.activate([
-        
+            /// Set constraints to position the table view to cover the entire safe area of the view
             tableView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
-        
         ])
     }
 
