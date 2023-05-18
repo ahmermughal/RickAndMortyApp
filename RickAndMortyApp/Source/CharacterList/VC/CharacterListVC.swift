@@ -7,12 +7,19 @@
 
 import UIKit
 import Combine
+
+enum Section{
+    case main
+}
+
 class CharacterListVC: UIViewController {
 
+    
     private let contentView = CharacterListContentView()
     private var subscriptions : [AnyCancellable] = []
     private let viewModel : CharacterViewModel
-    
+    private var dataSource: UITableViewDiffableDataSource<Section, CharacterProfile>!
+
     init(viewModel: CharacterViewModel = CharacterViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -28,8 +35,10 @@ class CharacterListVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupBinding()
         configureVC()
         configureTableView()
+        configureDataSource()
         viewModel.getCharacters()
     }
     
@@ -42,27 +51,41 @@ class CharacterListVC: UIViewController {
     
     private func configureTableView(){
         contentView.tableView.register(CharacterTableViewCell.self, forCellReuseIdentifier: CharacterTableViewCell.REUSE_ID)
-        contentView.tableView.dataSource = self
         contentView.tableView.separatorStyle = .none
     }
+    
+    private func setupBinding(){
+        viewModel.$characterList
+            .filter({ list in
+                !list.isEmpty
+            })
+            .sink(receiveValue: handleCharacterList)
+            .store(in: &subscriptions)
+    }
 
-
-}
-
-extension CharacterListVC : UITableViewDataSource{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+    private func handleCharacterList(characters: [CharacterProfile]){
+           updateData(on: characters)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CharacterTableViewCell.REUSE_ID) as! CharacterTableViewCell
+    private func configureDataSource(){
+        dataSource = UITableViewDiffableDataSource(tableView: contentView.tableView, cellProvider: { tableView, indexPath, character in
+            let cell = tableView.dequeueReusableCell(withIdentifier: CharacterTableViewCell.REUSE_ID, for: indexPath) as! CharacterTableViewCell
+            
+            cell.set(character: character)
+            
+            return cell
+        })
         
-        cell.set(character: CharacterProfile(name: "Rick", species: "Human", status: "Alive", imageURL: ""))
-        
-        return cell
     }
     
-    
-    
-    
+    func updateData(on characters: [CharacterProfile]){
+        var snapshot = NSDiffableDataSourceSnapshot<Section, CharacterProfile>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(characters)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {return}
+            self.dataSource.apply(snapshot, animatingDifferences: true)
+        }
+    }
+
 }

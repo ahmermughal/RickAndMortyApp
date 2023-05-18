@@ -28,7 +28,7 @@ struct CharacterPageInfo : Codable{
     }
 }
 
-struct CharacterProfile : Codable {
+struct CharacterProfile : Codable, Hashable {
     let name : String
     let species : String
     let status: String

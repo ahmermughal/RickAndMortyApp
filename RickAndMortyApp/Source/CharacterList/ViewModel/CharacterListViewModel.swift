@@ -28,8 +28,8 @@ class CharacterViewModel{
     }
     
     private func handleCharacterResponse(response: CharacterResponse){
-        print(response)
-        
+        characterList = response.results
+        print("Characters: \(characterList)")
     }
     
     
